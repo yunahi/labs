@@ -1,0 +1,34 @@
+**What is OpenGL? Why is it sometimes referred to as a state machine?
+
+Open Graphics Library, is a cross-platform API that can let you create
+2D and 3D graphics using the GPU. OpenGL has a global state that can be
+changed in lots of different ways. For example, certain settings
+(e.g. GL_DEPTH_TEST, GL_BLEND) can be enabled or disabled. Depending on OpenGL’s
+ state, certain operations might behave very differently.
+
+cross-platform API that creates 2D and 3D graphics using the GPU. It is referred
+to as a state machine because its state can change.
+
+**What is a VBO and why is it important?
+
+OpenGL is able to store arrays of data on the GPU in something called a buffer
+object. When a buffer object contains vertex data (such as vertex positions),
+it’s called a vertex buffer object, or VBO.
+
+Where open gl stores data such as vertex position
+
+**What is a VAO and why is it important?
+
+In order to associate attributes with the data in the VBO, we need something
+called a vertex array object, or VAO. This is a pretty confusing name, as it’s
+not actually an array of vertex data. (That’s the VBO!) The VAO is an object
+that knows how to draw the data in a VBO because it knows what attributes are
+stored in it.
+
+VAO associates attribute with the data in the VBO. VAO is important becuase
+without it OpenGl will not know how to treat the data in VBO
+
+**What were the drawing modes covered in this lab and how do they differ?
+
+Triangle, strip and fan. Triangle is just a triangle but with strip and fan,
+we can avoid repeating vertices because OpenGl knows how to assemble them

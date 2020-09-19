@@ -49,11 +49,13 @@ void GLWidget::paintGL() {
 
     switch (settings.shape) {
         case SHAPE_TRIANGLE:
+            m_triangle->draw();
             break;
         case SHAPE_TRIANGLE_STRIP:
+            m_strip->draw();
             break;
         case SHAPE_TRIANGLE_FAN:
-
+            m_fan->draw();
             break;
     }
 
@@ -66,18 +68,30 @@ void GLWidget::resizeGL(int w, int h) {
 
 void GLWidget::initializeTriangle() {
     m_triangle = std::make_unique<OpenGLShape>();
-
     // TODO [Task 7]
+    std::vector<float> vector {-0.5,-0.5,0,0.5,-0.5,0,0,0.5,0};
+    m_triangle->setVertexData(vector.data(),9,VBO::GEOMETRY_LAYOUT::LAYOUT_TRIANGLES, 3);
+    //check
+    m_triangle->setAttribute(ShaderAttrib::POSITION,3,0,VBOAttribMarker::DATA_TYPE::FLOAT,false);
+    m_triangle->buildVAO();
+
 }
 
 void GLWidget::initializeStrip() {
     m_strip = std::make_unique<OpenGLShape>();
-
     // TODO [Task 9]
+    std::vector<float> vector{-0.5,0.5,0,-0.5,-0.5,0,0,0.5,0,0,-0.5,0,0.5,0.5,0,0.5,-0.5,0};
+    m_strip->setVertexData(vector.data(),18,VBO::GEOMETRY_LAYOUT::LAYOUT_TRIANGLE_STRIP,6);
+    m_strip->setAttribute(ShaderAttrib::POSITION,3,0,VBOAttribMarker::DATA_TYPE::FLOAT,false);
+    m_strip->buildVAO();
 }
 
 void GLWidget::initializeFan() {
     m_fan.reset(new OpenGLShape());
-
     // TODO [Task 10]
+    std::vector<float> vector{0,0,0,0,0.5,0,-0.433,0.25,0,-0.433,-0.25,0,0,-0.5,0,0.433,-0.25,0,0.433,0.25,0,0,0.5,0};
+    m_fan->setVertexData(vector.data(),24,VBO::GEOMETRY_LAYOUT::LAYOUT_TRIANGLE_FAN,8);
+    m_fan->setAttribute(ShaderAttrib::POSITION,3,0,VBOAttribMarker::DATA_TYPE::FLOAT,false);
+    m_fan->buildVAO();
+
 }
