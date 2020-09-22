@@ -1,0 +1,11 @@
+Be prepared to answer one or more of the following questions from the TA:
+* Describe the three transformation matrices in this lab.
+    * translation, rotation, scale
+* In code, what order would you write the multiplication for a vec3 and the perspective(projection), view, and model matrices?
+    * perspective, view, model
+* What is the difference between vertex shaders and fragment shaders?
+    * vertex shaders process each vertex individually before rendering.  Fragment shaders, on the other hand output a color for every pixel, aka “fragment.”  
+* What is a uniform variable?
+    * applies to all vertex
+* Please describe the format of the UV coordinates using the four corners of your monitor.
+    * (0,0)(0,1)(1,0)(1,1) 
