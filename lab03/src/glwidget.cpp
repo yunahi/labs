@@ -49,11 +49,12 @@ void GLWidget::initializeGL() {
 
 void GLWidget::paintGL() {
     // Clear the color and depth buffers.
-    glClear(GL_COLOR | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glm::mat4 model(1.f);
 
     glUseProgram(m_program);
+
 
     // Sets projection and view matrix uniforms.
     glUniformMatrix4fv(glGetUniformLocation(m_program, "projection"), 1, GL_FALSE, glm::value_ptr(m_projection));
@@ -73,11 +74,15 @@ void GLWidget::paintGL() {
     glUniform1f(glGetUniformLocation(m_program, "diffuseIntensity"), settings.diffuseIntensity);
     glUniform1f(glGetUniformLocation(m_program, "specularIntensity"), settings.specularIntensity);
 
-    glUseProgram(0);
+//    glUseProgram(0);
+
 
     // Draws a sphere at the origin.
     model = glm::mat4(1.f);
+
     glUniformMatrix4fv(glGetUniformLocation(m_program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+    //no current program
+
     glUniform3f(glGetUniformLocation(m_program, "color"),
                 settings.sphereMColor.redF(),
                 settings.sphereMColor.greenF(),
@@ -85,8 +90,28 @@ void GLWidget::paintGL() {
     rebuildMatrices();
     m_sphere->draw();
 
+
     // TODO: Draw two more spheres. (Task 2)
 
+    glm::mat4 translate = glm::translate(model, glm::vec3(-1.5, 0.f, 0.f));
+    glUniformMatrix4fv(glGetUniformLocation(m_program, "model"), 1, GL_FALSE,glm::value_ptr(translate));
+    glUniform3f(glGetUniformLocation(m_program, "color"),
+                settings.sphereLColor.redF(),
+                settings.sphereLColor.greenF(),
+                settings.sphereLColor.blueF());
+    rebuildMatrices();
+    m_sphere->draw();
+
+
+    translate = glm::translate(model, glm::vec3(1.5f, 0.f, 0.f));
+    glUniformMatrix4fv(glGetUniformLocation(m_program, "model"), 1, GL_FALSE,glm::value_ptr(translate));
+    glUniform3f(glGetUniformLocation(m_program, "color"),
+                settings.sphereRColor.redF(),
+                settings.sphereRColor.greenF(),
+                settings.sphereRColor.blueF());
+    rebuildMatrices();
+    m_sphere->draw();
+    glUseProgram(0);
 }
 
 void GLWidget::resizeGL(int w, int h) {
