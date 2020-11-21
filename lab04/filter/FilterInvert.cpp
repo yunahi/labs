@@ -1,5 +1,5 @@
 #include "FilterInvert.h"
-
+#include <iostream>
 FilterInvert::~FilterInvert()
 {
 }
@@ -18,8 +18,16 @@ void FilterInvert::apply(Canvas2D *canvas) {
         for (int c = 0; c < canvas->width(); c++) {
             // TODO: Task 7 Update the color with its inversion
 
+            char red = current_pixel->r;
+            char green = current_pixel->g;
+            char blue = current_pixel->b;
+            current_pixel->r = 255 - red;
+            current_pixel->g = 255 - green;
+            current_pixel->b = 255 - blue;
+
 
             // CONTINUED: Task 8 [Optional]
+
 
             current_pixel++;
         }

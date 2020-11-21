@@ -1,0 +1,22 @@
+What do the pixel values in a grayscale image represent? 
+ the pixels only carry intensity information
+
+Describe the process of convolving an image with a kernel.
+Kernels kind of defines the weight of the neighbouring pixels
+
+What happens when the kernel exceeds the boundary of an image?
+In this lab, we ignored it. meaning the rgb values were left at 0.
+
+Provide a kernel to shift an image three pixels downwards.
+0001000
+0000000
+0000000
+0000000
+0000000
+0000000
+0000000
+sevne by seven with all zero except 1 at row 1 col 4.
+
+
+Provide a kernel to shift an image five pixels upwards.
+11 by 11 with all zero except 1 at row 11 col 6

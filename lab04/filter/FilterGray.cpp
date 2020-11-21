@@ -1,7 +1,8 @@
 #include "FilterGray.h"
-
+#include<iostream>
 unsigned char RGBAToGray(const RGBA &pixel) {
     // TODO: Task 5
+    return (0.299*pixel.r + 0.587*pixel.g + 0.114*pixel.b);
 
 }
 
@@ -26,9 +27,14 @@ void FilterGray::apply(Canvas2D *canvas) {
 
         for (int c = 0; c < canvas->width(); c++) {
             // TODO: Task 4
+            char gray = RGBAToGray(*current_pixel);
+
 
 
             // TODO: Task 6
+            current_pixel->r = gray;
+            current_pixel->g = gray;
+            current_pixel->b = gray;
 
 
             /* Advance to the next pixel */

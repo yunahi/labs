@@ -3,7 +3,7 @@
 uniform mat4 model, view, projection;
 
 // Light properties
-const vec3 WorldSpace_lightPos = vec3(2, 2, 2); // world-space light position
+const vec3 WorldSpace_lightPos = vec3(2, 2, 2);
 uniform vec3 lightColor;
 uniform float lightIntensity;
 
@@ -26,26 +26,27 @@ out vec3 fragColor;
 
 
 void main(){
+    //ambient
     vec3 ambientComp = color * ambientIntensity;
 
+    //diffuse
     vec3 n = normalize(WorldSpace_normal.xyz);
     vec3 L = normalize(WorldSpace_lightPos - WorldSpace_position.xyz);
     float dotProductDiff = max(0,dot(n,L));
-
     vec3 diffuseComp = color * lightColor * diffuseIntensity * dotProductDiff;
 
-//    vec3 eye = normalize(vec4(0.0, 0.0, 0.0, 1.0) - WorldSpace_position);
-    vec3 eye = - normalize(WorldSpace_position.xyz);
+    //specular
+    vec3 eye = normalize(inverse(view)*vec4(0,0,0,1)- WorldSpace_position).xyz;
+    vec3 reflection = normalize(reflect(WorldSpace_position.xyz - WorldSpace_lightPos, normalize(WorldSpace_normal.xyz)));
+    float dotProductSpec = max(0,dot(reflection, eye));
+    vec3 specularComp = color * lightColor * specularIntensity * pow(dotProductSpec,shininess);
 
-    vec3 reflection = normalize(reflect(WorldSpace_position - WorldSpace_lightPos, WorldSpace_normal));
-//    float dotProductSpec = max(0,dot(reflection, eye));
+    //attenuation
+    float d = distance(WorldSpace_lightPos.xyz, WorldSpace_position.xyz);
+    float attenuation = lightIntensity * min(1 / (attConstant + attLinear * d + attQuadratic * pow(d,2)), 1);
 
-//    vec3 specularComp = color * lightColor * specularIntensity * pow(dotProductSpec,shininess);
+    //fragColor
+    fragColor = ambientComp + attenuation * (diffuseComp + specularComp);
 
-//    float d = distance(WorldSpace_lightPos, WorldSpace_position);
-//    float attenuation = lightIntensity * min(1 / (attConstant + attLinear * d + attQuadratic * pow(d,2)), 1);
-//    attenuation = 1;
-//    fragColor = ambientComp + attenuation * (diffuseComp + specularComp);
-fragColor = ambientComp;
 
 }

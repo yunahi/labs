@@ -20,6 +20,8 @@ private:
     float randValue(int row, int col);
     glm::vec3 getPosition(int row, int col);
     glm::vec3 getNormal(int row, int col);
+    float getHeight(float freq, float amp, int row, int col);
+
     std::unique_ptr<OpenGLShape> m_shape;
     const float m_numRows, m_numCols;
 };
